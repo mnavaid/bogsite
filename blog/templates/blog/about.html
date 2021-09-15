@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> {% block  title %} Home Page {% endblock title %}</title>
+</head>
+<body>
+  {% block maincontent %}
+    <div class="col-sum-10">
+      <h3 class="text-white my-5"> About Page</h3>
+      <p class="lead">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit quo provident cupiditate nesciunt, accusamus, voluptas doloribus molestiae reiciendis voluptatem iusto exercitationem. Dolorum iusto obcaecati tempore!</p>
+      <p class="lead">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit quo provident cupiditate nesciunt, accusamus, voluptas doloribus molestiae reiciendis voluptatem iusto exercitationem. Dolorum iusto obcaecati tempore!</p> 
+</div>
+
+    </div>
+  {% endblock maincontent %}
+</body>
+</html>
