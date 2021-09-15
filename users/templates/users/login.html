@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> {% block  title %} Login Page {% endblock title %}</title>
+</head>
+<body>
+  {% block maincontent %}
+    <div class="col-sum-10">
+      <h3 class="text-white my-5"> This is Login Page </h3>
+    </div>
+    
+  {% endblock maincontent %}
+</body>
+</html>
