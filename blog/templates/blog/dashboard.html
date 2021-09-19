@@ -19,11 +19,20 @@
           </div>
         {% endfor %}
       {% endif %}
-
     {% endblock msg %}
+  {% block side %}
+    <div class="col-sm-2 ny-3 text-white text-center ">
+      <h4 class="my-4">Profile</h4>
+      <h5>{{name}}</h5>
+      {% for grp in group %}
+        <p>{{grp.name}}</p>
+      {% endfor %}  
+    </div>
+  {% endblock side %}
+
   {% block maincontent %}
     <div class="col-sm-10">
-      <h3 class="text-white my-5"> User-Dashboard </h3>
+      <h3 class="text-white my-5"> Dashboard </h3>
       <a href="{% url 'addpost' %}" class="btn btn-success">Add Post</a>
       <h4 class="text-center alert alert-info mt-2">Show User posts</h4>
       <table class="table table-hover bg-white">

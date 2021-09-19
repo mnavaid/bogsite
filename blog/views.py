@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate
 from .models import BlogPosts
 from .forms import postForm
+from django.contrib.auth.models import Group
+from django.contrib import messages
 # Home View
 def home(request):
   posts = BlogPosts.objects.all()
@@ -18,9 +20,14 @@ def contact(request):
 
 # Dashboard View
 def dashboard(request):
-  posts = BlogPosts.objects.all()
-  return render(request,'blog/dashboard.html', {'posts':posts})
-
+  if request.user.is_authenticated:
+    posts = BlogPosts.objects.all()
+    usr = request.user
+    uname =usr.get_full_name()
+    grp = usr.groups.all()
+    return render(request,'blog/dashboard.html', {'posts':posts, 'name':uname, 'group':grp})
+  else:
+    return HttpResponseRedirect('/login/')
 #Add Post View
 def add_post(request):
   if request.user.is_authenticated:
@@ -31,6 +38,7 @@ def add_post(request):
         desc = form.cleaned_data['description']
         pst = BlogPosts(title=title, description=desc)
         pst.save()
+        messages.success(request, "Post added successfully!!")
         return HttpResponseRedirect('/dashboard/')
     else:
       form=postForm()          
@@ -47,6 +55,7 @@ def update_post(request,id):
       form = postForm(request.POST, instance=pi)
       if form.is_valid():
         form.save()
+        messages.success(request, "Post updated successfully!!")
         return HttpResponseRedirect('/dashboard/')
     else:
       pi = BlogPosts.objects.get(pk=id)
@@ -61,6 +70,7 @@ def delete_post(request,id):
     if request.method=='POST':
       pi = BlogPosts.objects.get(pk=id)
       pi.delete()
+      messages.success(request, "Post Deleted successfully!!")
       return HttpResponseRedirect('/dashboard/')
   else:
     return HttpResponseRedirect('/login/')
