@@ -42,14 +42,26 @@ def add_post(request):
 #Update Post View
 def update_post(request,id):
   if request.user.is_authenticated:
-    return render(request, 'blog/updatepost.html')
+    if request.method == 'POST':
+      pi = BlogPosts.objects.get(pk=id)
+      form = postForm(request.POST, instance=pi)
+      if form.is_valid():
+        form.save()
+        return HttpResponseRedirect('/dashboard/')
+    else:
+      pi = BlogPosts.objects.get(pk=id)
+      form = postForm(instance=pi)
+    return render(request, 'blog/updatepost.html',{'form':form})
   else:
     return HttpResponseRedirect('/login/')
 
 #Delete Post View
 def delete_post(request,id):
   if request.user.is_authenticated:
-    return HttpResponseRedirect('/dashboard/')
+    if request.method=='POST':
+      pi = BlogPosts.objects.get(pk=id)
+      pi.delete()
+      return HttpResponseRedirect('/dashboard/')
   else:
     return HttpResponseRedirect('/login/')
 
