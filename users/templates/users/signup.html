@@ -12,9 +12,28 @@
 <body>
   {% block maincontent %}
     <div class="col-sum-10">
-      <h3 class="text-white my-5"> This is Registration Page </h3>
+      <h3 class="text-white my-5"> Become a Member </h3>
+      {% if messages %}
+        {% for message in messages %}
+          <p {% if message.tags %} class="alert alert-{{message.tags}} mb-5"
+          {% endif %}>{{message}}</p>
+        {% endfor %}
+      {% endif %}
     </div>
-    {{frm.as_p}}
+    <form action="" method="post" novalidate>
+      {% csrf_token %}
+      {% for field in frm %}
+        <div class="form-group">
+          {{field.label_tag}} {{field}} <small class="text-danger">{{field.errors|striptags}}</small>
+        </div>
+      {% endfor %}
+      <input type="submit" class="btn btn-primary my-3" value="Submit">
+      {% if frm.non_field_errors %}
+        {% for error in frm.non_field_errors %}
+          <p class="alert alert-danger my-3">{{ error }}</p>
+        {% endfor %}
+       {% endif %} 
+    </form>
   {% endblock maincontent %}
 </body>
 </html>

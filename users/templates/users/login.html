@@ -12,9 +12,29 @@
 <body>
   {% block maincontent %}
     <div class="col-sum-10">
-      <h3 class="text-white my-5"> This is Login Page </h3>
+      <h3 class="text-white my-5"> Please Login Page </h3>
+      {% if messages %}
+        {{message.tags}}
+        {% for message in messages %}
+          <p {% if message.tags %} class="alert alert-{{message.tags}} mb-5"
+          {% endif %}>{{message}}</p>
+        {% endfor %}
+      {% endif %}
     </div>
-    
+    <form action="" method="POST" novalidate>
+      {% csrf_token %}
+      {% for frm in form %}
+        <div class="form-group">
+          {{frm.label_tag}} {{frm}} <small class="text-danger">{{frm.errors|striptags}} </small>
+        </div>
+      {% endfor %}
+      <input type="submit" class="btn btn-primary my-3" value="Submit">
+      {% if frm.non_field_errors %}
+        {% for error in frm.non_field_errors %}
+          <p class="alert alert-danger my-3">{{ error }}</p>
+        {% endfor %}
+       {% endif %} 
+    </form>
   {% endblock maincontent %}
 </body>
 </html>
