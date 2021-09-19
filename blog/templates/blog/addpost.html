@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Add Post{% endblock title %}
+{% block maincontent %}
+<div class="col-sm-10">
+  <div class="text-white my-5" >Add Post</div>
+</div>
+<form action="" method="post" novalidate>
+  {% csrf_token %}
+  {{form.as_p}}
+  <input type="submit" class="btn btn-success" value="Add">
+  <a href="{% url 'dashboard' %}", class="btn btn-danger">Cancel</a>
+</form>  
+{% endblock maincontent %}
